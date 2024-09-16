@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../constants.dart';
 
 class NewReleasedList extends StatelessWidget {
@@ -27,6 +28,7 @@ class NewReleasedList extends StatelessWidget {
                 onTap: () {},
                 child: Image.asset(
                   'assets/images/icon_add_to_list.png',
+                  fit: BoxFit.fill,
                   width: MediaQuery.of(context).size.width * 0.06,
                   height: MediaQuery.of(context).size.height * 0.04,
                 ),

@@ -6,16 +6,16 @@ import '../constants.dart';
 import '../custom_methods.dart';
 import '../models/movie_details.dart';
 
-class RecommendedList extends StatefulWidget {
+class MoreLikeThisList extends StatefulWidget {
   final AsyncSnapshot snapshot;
 
-  const RecommendedList({super.key, required this.snapshot});
+  const MoreLikeThisList({super.key, required this.snapshot});
 
   @override
-  State<RecommendedList> createState() => _RecommendedListState();
+  State<MoreLikeThisList> createState() => _MoreLikeThisListState();
 }
 
-class _RecommendedListState extends State<RecommendedList> {
+class _MoreLikeThisListState extends State<MoreLikeThisList> {
   late List<int?> movieRuntimes;
 
   @override
@@ -53,7 +53,7 @@ class _RecommendedListState extends State<RecommendedList> {
               children: [
                 Container(
                   width: MediaQuery.of(context).size.width * 0.25,
-                  height: MediaQuery.of(context).size.height * 0.21,
+                  height: MediaQuery.of(context).size.height * 0.23,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(7.0),
                       color: MyAppColors.cardListGrayColor),
@@ -63,13 +63,34 @@ class _RecommendedListState extends State<RecommendedList> {
                         borderRadius: const BorderRadius.only(
                             topRight: Radius.circular(7.0),
                             topLeft: Radius.circular(7.0)),
-                        child: Image.network(
-                          '${Constants.baseImage}${widget.snapshot.data[index].posterPath}',
-                          fit: BoxFit.fill,
-                          filterQuality: FilterQuality.high,
-                          width: MediaQuery.of(context).size.width * 0.25,
-                          height: MediaQuery.of(context).size.height * 0.14,
-                        ),
+                        child: (widget.snapshot.data[index].posterPath !=
+                                    null &&
+                                widget.snapshot.data[index].posterPath!
+                                    .isNotEmpty)
+                            ? Image.network(
+                                '${Constants.baseImage}${widget.snapshot.data[index].posterPath}',
+                                fit: BoxFit.fill,
+                                filterQuality: FilterQuality.high,
+                                width: MediaQuery.of(context).size.width * 0.25,
+                                height:
+                                    MediaQuery.of(context).size.height * 0.14,
+                                errorBuilder: (context, error, stackTrace) {
+                                  return const Text(
+                                    'Error loading image',
+                                    style: TextStyle(
+                                      color: MyAppColors.goldColor,
+                                      fontSize: 7,
+                                    ),
+                                  );
+                                },
+                              )
+                            : const Text(
+                                'No photo',
+                                style: TextStyle(
+                                  color: MyAppColors.goldColor,
+                                  fontSize: 7,
+                                ),
+                              ),
                       ),
                       Expanded(
                         child: Padding(
@@ -107,7 +128,7 @@ class _RecommendedListState extends State<RecommendedList> {
                               ),
                               Expanded(
                                 child: Text(
-                                    '${widget.snapshot.data[index].releaseDate.substring(0, 4)} R ${CustomMethods.timeFormat(runtime)}',
+                                    '${widget.snapshot.data[index].releaseDate}R ${CustomMethods.timeFormat(runtime)}',
                                     style:
                                         Theme.of(context).textTheme.bodySmall),
                               ),
