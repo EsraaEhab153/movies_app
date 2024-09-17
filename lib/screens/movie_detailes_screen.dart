@@ -45,7 +45,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
       body: FutureBuilder(
         future: movieDetail,
         builder: (context, snapshot) {
-          if (snapshot.hasError) {
+          if (snapshot.hasError || snapshot.data?.posterPath == null) {
             return Center(
               child: Text(snapshot.error.toString()),
             );

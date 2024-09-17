@@ -14,6 +14,8 @@ class Api {
       'https://api.themoviedb.org/3/movie/top_rated?api_key=${Constants.apiKey}';
   static const _movieDetailsUrl = 'https://api.themoviedb.org/3/movie/';
   static const _moreLikeThisUrl = 'https://api.themoviedb.org/3/movie/';
+  static const _searchUrl =
+      'https://api.themoviedb.org/3/search/movie?api_key=${Constants.apiKey}';
 
   Future<List<Movie>> getPopularMovies() async {
     final response = await http.get(Uri.parse(_popularUrl));
@@ -59,6 +61,16 @@ class Api {
   Future<List<Movie>> getMoreLikeThis(int movieId) async {
     final response = await http.get(Uri.parse(
         '$_moreLikeThisUrl${movieId}/similar?api_key=${Constants.apiKey}'));
+    if (response.statusCode == 200) {
+      final decodedData = json.decode(response.body)['results'] as List;
+      return decodedData.map((movie) => Movie.fromJson(movie)).toList();
+    } else {
+      throw Exception('SomeThing went wrong');
+    }
+  }
+
+  Future<List<Movie>> getSearchMovie(String searchText) async {
+    final response = await http.get(Uri.parse('$_searchUrl&query=$searchText'));
     if (response.statusCode == 200) {
       final decodedData = json.decode(response.body)['results'] as List;
       return decodedData.map((movie) => Movie.fromJson(movie)).toList();
