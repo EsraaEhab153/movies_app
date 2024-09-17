@@ -97,7 +97,7 @@ class _PopularSliderState extends State<PopularSlider> {
                             height: MediaQuery.of(context).size.height * 0.002,
                           ),
                           Text(
-                            '${widget.snapshot.data[index].releaseDate.substring(0, 4)} ${CustomMethods.timeFormat(runtime)}',
+                            '${CustomMethods.getYear(widget.snapshot.data[index].releaseDate)} ${CustomMethods.timeFormat(runtime)}',
                             style: Theme.of(context).textTheme.bodySmall,
                           ),
                         ],

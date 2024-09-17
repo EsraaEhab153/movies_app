@@ -8,4 +8,10 @@ class CustomMethods {
     int min = runtime;
     return '$hours h $min min';
   }
+
+  static String getYear(String date) {
+    DateTime parsedDate = DateTime.parse(date);
+    String year = parsedDate.year.toString();
+    return year;
+  }
 }

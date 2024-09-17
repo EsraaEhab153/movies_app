@@ -45,7 +45,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
       body: FutureBuilder(
         future: movieDetail,
         builder: (context, snapshot) {
-          if (snapshot.hasError || snapshot.data?.posterPath == null) {
+          if (snapshot.hasError) {
             return Center(
               child: Text(snapshot.error.toString()),
             );
@@ -80,7 +80,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                           height: MediaQuery.of(context).size.height * 0.009,
                         ),
                         Text(
-                          '${movie.releaseDate.substring(0, 4)}  ${CustomMethods.timeFormat(movie.runTime)}',
+                          '${movie.releaseDate}  ${CustomMethods.timeFormat(movie.runTime)}',
                           style: Theme.of(context).textTheme.bodySmall,
                         ),
                         SizedBox(

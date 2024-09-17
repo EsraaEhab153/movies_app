@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:movies_app/constants.dart';
+import 'package:movies_app/models/category.dart';
 import 'package:movies_app/models/movie.dart';
 import 'package:movies_app/models/movie_details.dart';
 
@@ -16,6 +17,11 @@ class Api {
   static const _moreLikeThisUrl = 'https://api.themoviedb.org/3/movie/';
   static const _searchUrl =
       'https://api.themoviedb.org/3/search/movie?api_key=${Constants.apiKey}';
+
+  static const _categoryUrl =
+      'https://api.themoviedb.org/3/genre/movie/list?language=en&api_key=${Constants.apiKey}';
+  static const _browseResultUrl =
+      'https://api.themoviedb.org/3/discover/movie?api_key=${Constants.apiKey}&language=en-US&with_genres=';
 
   Future<List<Movie>> getPopularMovies() async {
     final response = await http.get(Uri.parse(_popularUrl));
@@ -71,6 +77,28 @@ class Api {
 
   Future<List<Movie>> getSearchMovie(String searchText) async {
     final response = await http.get(Uri.parse('$_searchUrl&query=$searchText'));
+    if (response.statusCode == 200) {
+      final decodedData = json.decode(response.body)['results'] as List;
+      return decodedData.map((movie) => Movie.fromJson(movie)).toList();
+    } else {
+      throw Exception('SomeThing went wrong');
+    }
+  }
+
+  Future<List<GenereCategory>> getGenres() async {
+    final response = await http.get(Uri.parse(_categoryUrl));
+    if (response.statusCode == 200) {
+      final decodedData = json.decode(response.body)['genres'] as List;
+      return decodedData
+          .map((genere) => GenereCategory.fromJson(genere))
+          .toList();
+    } else {
+      throw Exception('SomeThing went wrong');
+    }
+  }
+
+  Future<List<Movie>> getBrowseResult(int genreId) async {
+    final response = await http.get(Uri.parse('$_browseResultUrl$genreId'));
     if (response.statusCode == 200) {
       final decodedData = json.decode(response.body)['results'] as List;
       return decodedData.map((movie) => Movie.fromJson(movie)).toList();
