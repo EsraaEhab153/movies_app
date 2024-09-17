@@ -123,7 +123,7 @@ class _RecommendedListState extends State<RecommendedList> {
                                 ),
                                 Expanded(
                                   child: Text(
-                                      '${widget.snapshot.data[index].releaseDate.substring(0, 4)} R ${CustomMethods.timeFormat(runtime)}',
+                                      '${CustomMethods.getYear(widget.snapshot.data[index].releaseDate)} R ${CustomMethods.timeFormat(runtime)}',
                                       style: Theme.of(context)
                                           .textTheme
                                           .bodySmall),

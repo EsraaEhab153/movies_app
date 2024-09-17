@@ -5,6 +5,7 @@ import '../api/api.dart';
 import '../constants.dart';
 import '../custom_methods.dart';
 import '../models/movie_details.dart';
+import '../screens/movie_detailes_screen.dart';
 
 class MoreLikeThisList extends StatefulWidget {
   final AsyncSnapshot snapshot;
@@ -31,9 +32,11 @@ class _MoreLikeThisListState extends State<MoreLikeThisList> {
       final movieId = widget.snapshot.data[i].id;
       try {
         MovieDetails movieDetails = await Api().getMovieDetails(movieId);
-        setState(() {
-          movieRuntimes[i] = movieDetails.runTime;
-        });
+        if (mounted) {
+          setState(() {
+            movieRuntimes[i] = movieDetails.runTime;
+          });
+        }
       } catch (e) {
         print('Error fetching runtime: $e');
       }
@@ -59,38 +62,54 @@ class _MoreLikeThisListState extends State<MoreLikeThisList> {
                       color: MyAppColors.cardListGrayColor),
                   child: Column(
                     children: [
-                      ClipRRect(
-                        borderRadius: const BorderRadius.only(
-                            topRight: Radius.circular(7.0),
-                            topLeft: Radius.circular(7.0)),
-                        child: (widget.snapshot.data[index].posterPath !=
-                                    null &&
-                                widget.snapshot.data[index].posterPath!
-                                    .isNotEmpty)
-                            ? Image.network(
-                                '${Constants.baseImage}${widget.snapshot.data[index].posterPath}',
-                                fit: BoxFit.fill,
-                                filterQuality: FilterQuality.high,
-                                width: MediaQuery.of(context).size.width * 0.25,
-                                height:
-                                    MediaQuery.of(context).size.height * 0.14,
-                                errorBuilder: (context, error, stackTrace) {
-                                  return const Text(
-                                    'Error loading image',
-                                    style: TextStyle(
-                                      color: MyAppColors.goldColor,
-                                      fontSize: 7,
-                                    ),
-                                  );
-                                },
-                              )
-                            : const Text(
-                                'No photo',
-                                style: TextStyle(
-                                  color: MyAppColors.goldColor,
-                                  fontSize: 7,
-                                ),
+                      InkWell(
+                        onTap: () {
+                          if (mounted) {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => MovieDetailsScreen(
+                                    movieId: widget.snapshot.data![index].id,
+                                    movieTitle:
+                                        widget.snapshot.data![index].title),
                               ),
+                            );
+                          }
+                        },
+                        child: ClipRRect(
+                          borderRadius: const BorderRadius.only(
+                              topRight: Radius.circular(7.0),
+                              topLeft: Radius.circular(7.0)),
+                          child: (widget.snapshot.data[index].posterPath !=
+                                      null &&
+                                  widget.snapshot.data[index].posterPath!
+                                      .isNotEmpty)
+                              ? Image.network(
+                                  '${Constants.baseImage}${widget.snapshot.data[index].posterPath}',
+                                  fit: BoxFit.fill,
+                                  filterQuality: FilterQuality.high,
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.25,
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.14,
+                                  errorBuilder: (context, error, stackTrace) {
+                                    return const Text(
+                                      'Error loading image',
+                                      style: TextStyle(
+                                        color: MyAppColors.goldColor,
+                                        fontSize: 7,
+                                      ),
+                                    );
+                                  },
+                                )
+                              : const Text(
+                                  'No photo',
+                                  style: TextStyle(
+                                    color: MyAppColors.goldColor,
+                                    fontSize: 7,
+                                  ),
+                                ),
+                        ),
                       ),
                       Expanded(
                         child: Padding(
@@ -128,7 +147,7 @@ class _MoreLikeThisListState extends State<MoreLikeThisList> {
                               ),
                               Expanded(
                                 child: Text(
-                                    '${widget.snapshot.data[index].releaseDate}R ${CustomMethods.timeFormat(runtime)}',
+                                    '${widget.snapshot.data[index].releaseDate} R ${CustomMethods.timeFormat(runtime)}',
                                     style:
                                         Theme.of(context).textTheme.bodySmall),
                               ),
