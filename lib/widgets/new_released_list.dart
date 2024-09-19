@@ -68,13 +68,13 @@ class _NewReleasedListState extends State<NewReleasedList> {
                       if (isSelected[index]) {
                         FireStoreUtilies.addedMovieToFireStore(
                                 widget.snapshot.data[index])
-                            .timeout(Duration(seconds: 2), onTimeout: () {
+                            .timeout(const Duration(seconds: 2), onTimeout: () {
                           print('movie added successfully');
                         });
                       } else {
                         FireStoreUtilies.removeMovieFromFireStore(
                                 widget.snapshot.data[index].id)
-                            .timeout(Duration(seconds: 2), onTimeout: () {
+                            .timeout(const Duration(seconds: 2), onTimeout: () {
                           print('movie removed successfully');
                         });
                       }
