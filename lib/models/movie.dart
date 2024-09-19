@@ -31,4 +31,17 @@ class Movie {
       id: json["id"],
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      "title": title,
+      "backdrop_path": backDropPath,
+      "original_title": originalTitle,
+      "overview": overview,
+      "poster_path": posterPath,
+      "release_date": releaseDate,
+      "vote_average": voteAverage,
+      "id": id,
+    };
+  }
 }

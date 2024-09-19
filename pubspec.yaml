@@ -38,6 +38,8 @@ dependencies:
   flutter_native_splash: ^2.3.7
   carousel_slider: ^4.2.1
   http: ^1.1.0
+  firebase_core: ^2.24.2
+  cloud_firestore: ^4.14.0
 
 
 dev_dependencies:
@@ -108,15 +110,15 @@ flutter_native_splash:
   # of your splash screen to a solid color.  Use background_image to set the background of your
   # splash screen to a png image.  This is useful for gradients. The image will be stretch to the
   # size of the app. Only one parameter can be used, color and background_image cannot both be set.
-  color: "#121212"
-  background_image: "assets/images/splash_screen.png"
+  #color: "#548751"
+  #background_image: "assets/images/splash_screen.png"
 
   # Optional parameters are listed below.  To enable a parameter, uncomment the line by removing
   # the leading # character.
 
   # The image parameter allows you to specify an image used in the splash screen.  It must be a
   # png file and should be sized for 4x pixel density.
-  #image: assets/images/splash_screen.png
+  #image: assets/images/splash_movies.png
 
   # The branding property allows you to specify an image used as branding in the splash screen.
   # It must be a png file. It is supported for Android, iOS and the Web.  For Android 12,
@@ -148,10 +150,10 @@ flutter_native_splash:
   # 640 pixels in diameter.
   # App icon without an icon background: This should be 1152×1152 pixels, and fit within a circle
   # 768 pixels in diameter.
-  image: assets/images/splash_screen.png
+  image: assets/images/splash_movies.png
 
   # Splash screen background color.
-  #color: "#42a5f5"
+  color: "#121312"
 
   # App icon background color.
   #icon_background_color: "#111111"
@@ -168,7 +170,7 @@ flutter_native_splash:
 
   # The android, ios and web parameters can be used to disable generating a splash screen on a given
   # platform.
-  android: false
+  android: true
   ios: true
   web: true
 
@@ -206,7 +208,7 @@ flutter_native_splash:
   # https://developer.android.com/reference/android/view/Gravity): bottom, center,
   # center_horizontal, center_vertical, clip_horizontal, clip_vertical, end, fill, fill_horizontal,
   # fill_vertical, left, right, start, or top.
-  android_gravity: fill
+  #android_gravity: fill
   #
   # ios_content_mode can be one of the following iOS UIView.ContentMode (see
   # https://developer.apple.com/documentation/uikit/uiview/contentmode): scaleToFill,
